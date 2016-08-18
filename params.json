@@ -1,6 +1,0 @@
-{
-  "name": "Imooc h5 reader",
-  "tagline": "慕课网练习-移动Web App阅读器的实现",
-  "body": "# iMOOC_H5_Reader\r\n慕课网练习-移动Web App阅读器的实现  \r\n## 实现功能：\r\n\r\n - 移动端兼容  \r\n - 使用原生js来实现交互动作 \r\n - 使用`iscrool`来优化滑动效果  \r\n - 使用`ajax`来请求数据 \r\n - 使用`json`文件模拟数据交互,实现了上下章节的切换  \r\n - 使用`airTemplate`来渲染数据  \r\n - 使用`localStrong`来保存用户操作记录\r\n\r\n\r\n### 1. 如何将`jquery`的插件挂载到`zepto`中？   \r\n\r\n```\r\n//先引入zepto，然后将window下的jquery对象指向zepto中的$\r\n<script>\r\nwindow.jQuery = $;\r\n</script>   \r\n```\r\n",
-  "note": "Don't delete this file! It's used internally to help with page regeneration."
-}
