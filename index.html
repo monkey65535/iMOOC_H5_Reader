@@ -243,6 +243,14 @@
 				top: -3px;
 				left: -3px;
 			}
+			
+			.m-artical-act {
+				position: fixed;
+				z-index: 100;
+				width: 100%;
+				height: 30%;
+				top: 30%
+			}
 		</style>
 	</head>
 
@@ -251,10 +259,10 @@
 		<section id="root" class="container">
 			<!--点击区域-->
 			<div class="m-artical-act">
-				<div class="artical-mid"></div>
+				<div class="artical-mid" id="action-mid"></div>
 			</div>
 			<!-- 顶部边栏 -->
-			<div class="top-nav" class="top-nav" style="display: none;">
+			<div id="top-nav" class="top-nav" style="display: none;">
 				<div class="icon-back"></div>
 				<div class="nav-title">返回书架</div>
 			</div>
@@ -279,7 +287,7 @@
 				</div>
 			</div>
 			<!--底部边栏-->
-			<div class="bottom-nav" style="display: none;">
+			<div id="bottom-nav" class="bottom-nav" style="display: none;">
 				<div class="bottom-btn mueu">
 					<i class="icon-mueu"></i>
 					<span>目录</span>
@@ -318,44 +326,118 @@
 		<script src="js/jquery.base64.js"></script>
 		<script src="js/jquery.jsonp.js"></script>
 		<script>
-			(function() {
-				//添加工具函数
+			$(function() {
+				//添加工具类
 				function Tools() {
 					this.preFix = 'html5_reader_';
 				}
 				Tools.prototype = {
-					constrator: Tools,
-					getStorage: function(key) {
-						alert(key);
-						//获取localStrong
-						return localStorage.getItem(this.preFix + key);
-					},
-					setStorage: function(key, value) {
-						//设置localStrong
-						return localStorage.setItem(this.preFix + key, value);
+						constrator: Tools,
+						getStorage: function(key) {
+							//获取localStrong
+							return localStorage.getItem(this.preFix + key);
+						},
+						setStorage: function(key, value) {
+							//设置localStrong
+							return localStorage.setItem(this.preFix + key, value);
+						}
 					}
+					//添加项目类
+				function Main() {
+					//初始化私有属性
+					this.DOM = {
+						topNav: $('#top-nav'),
+						bottomNav: $('#bottom-nav'),
+						bookCon: $("#reader-container"),
+						nightDaySwith:$('#bottom-nav .day'),
+						fontChange:$('#bottom-nav .font'),
+						fontIcon:$('#bottom-nav .font i'),
+						fontOpear:$('.font-opear'),
+						fontPuls:$('.font-opear .font-plus'),
+						fontMinus:$('.font-opear .font-minus')
+					}
+					//判断localStrong中是否有字体数据，如果有就按照这个数据走，如果没有默认为14
+					var tools = new Tools();
+					if(tools.getStorage("fontSize")){
+						//console.log(tools.getStorage("fontSize"));
+						this.FontSize = tools.getStorage("fontSize");
+					}else{
+						this.FontSize = 14;	
+					}
+					//设置阅读器的默认字体大小
+					this.DOM.bookCon.css('font-size',parseFloat(this.FontSize));
+					this.Bg = null;
+					this.EventHanlder();
 				}
-				
-				function main(){
-					//整个项目的入口函数
-				}
-				
-				function ReaderModel(){
-					//数据操作
-				}
-				
-				function ReaderBaseFrame(){
-					//页面渲染	
-				}
-				
-				function EventHanlder(){
-					//交互的事件绑定
-				}
-				
-				main();
-				var tools = new Tools();
-				tools.setStorage("name","H5-Reader");
-			})()
+				//项目入口的原型
+				Main.prototype = {
+						constrator: Main,
+						ReaderModel: function() {
+							//数据操作
+							alert(1);
+						},
+						ReaderBaseFrame: function() {
+							//页面渲染
+						},
+						EventHanlder: function() {
+							var _this = this;
+							var thisWin = $(window);
+							var thisDoc = $(document);
+							var tools = new Tools();
+							//交互的事件绑定
+							$('.m-artical-act').click(function() {
+								_this.DOM.topNav.toggle();
+								_this.DOM.bottomNav.toggle();
+							});
+							thisWin.scroll(function() {
+								_this.DOM.topNav.hide();
+								_this.DOM.bottomNav.hide();
+								if(_this.DOM.fontIcon.hasClass('icon-font-act')){
+									//这个时候的font图标是初使状态
+									_this.DOM.fontIcon.removeClass('icon-font-act').addClass('icon-font');
+									_this.DOM.fontOpear.hide();
+								}
+							})
+							this.DOM.nightDaySwith.click(function(){
+								//修改图标，文本背景，然后替换文字
+							});
+							//文字控制面板
+							this.DOM.fontChange.click(function(){
+								console.log(_this.DOM.fontIcon.hasClass('icon-font'));
+								if(_this.DOM.fontIcon.hasClass('icon-font')){
+									//这个时候的font图标是初使状态
+									_this.DOM.fontIcon.removeClass('icon-font').addClass('icon-font-act');
+									_this.DOM.fontOpear.show();
+								}else{
+									//这个时候的font图标是点击过的状态
+									_this.DOM.fontIcon.removeClass('icon-font-act').addClass('icon-font');
+									_this.DOM.fontOpear.hide();
+								}
+							});
+							//字体大小缩放
+							this.DOM.fontPuls.click(function(){
+								//放大
+								_this.FontSize ++ ;
+								if(_this.FontSize >=20){
+									_this.FontSize = 20;
+								}
+								_this.DOM.bookCon.css('font-size',_this.FontSize);
+								tools.setStorage("fontSize",_this.FontSize);
+							});
+							this.DOM.fontMinus.click(function(){
+								//缩小
+								_this.FontSize -- ;
+								if(_this.FontSize <=14){
+									_this.FontSize = 14;
+								}
+								_this.DOM.bookCon.css('font-size',_this.FontSize);
+								tools.setStorage("fontSize",_this.FontSize);
+							});
+						}
+					}
+				//项目入口的实例化
+				var main = new Main();
+			})
 		</script>
 	</body>
 
