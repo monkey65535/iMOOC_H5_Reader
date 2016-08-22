@@ -7,7 +7,6 @@
  - 使用`iscrool`来优化滑动效果  
  - 使用`ajax`来请求数据 
  - 使用`json`文件模拟数据交互,实现了上下章节的切换  
- - 使用`airTemplate`来渲染数据  
  - 使用`localStrong`来保存用户操作记录
 
 
