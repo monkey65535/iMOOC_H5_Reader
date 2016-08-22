@@ -1,10 +1,11 @@
 # iMOOC_H5_Reader
-慕课网练习-移动Web App阅读器的实现  
+慕课网练习-移动Web App阅读器的实现    代码已完成，正在使用面向对象改写中···  
+项目链接[link](http://dilidili.p.imooc.io/)  
+
 ## 实现功能：
 
  - 移动端兼容  
  - 使用`zepto`来实现交互动作 
- - 使用`iscrool`来优化滑动效果  
  - 使用`ajax`来请求数据 
  - 使用`json`文件模拟数据交互,实现了上下章节的切换  
  - 使用`localStrong`来保存用户操作记录
